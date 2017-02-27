@@ -85,7 +85,8 @@ int main()
 
         //float b=array.Pull(); // возврящает типа float
         //st c=array.Pull(); // возврящает типа st
-
+//ssdsvdvsdgsdbbd
+int bfbf = 0;
 
 
 
