@@ -9,7 +9,7 @@ class Array {
 public:
   void **element;
 
-  int Length(){ // размера масива
+  int Length(){ // размер масива
     return count;
   }
 
@@ -21,6 +21,7 @@ public:
   }
 
 //test
+//sfsfgs
 
   TYPE Pull(){
 
