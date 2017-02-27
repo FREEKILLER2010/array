@@ -15,12 +15,14 @@ public:
 
   void Push(void *data){ // добавить элемент в массив
     element=(void**)realloc(element,(count+1)*sizeof(void*));
+    cout << "here\n";
     element[count]=(void*)malloc(sizeof(TYPE));
+    cout << "here2\n";
     memcpy(element[count],data,sizeof(TYPE));
+    cout << "here3\n";
     count++;
   }
 
-//test
 
   TYPE Pull(){
 
@@ -72,12 +74,12 @@ int main()
 
 
 
-        cout << "test\n" << array.Pull()<<"\n";
-        cout << "test\n" << array2.Pull()<<"\n";
-        cout << "test\n" << array3.Pull()<<"\n";
+        cout << "test01\n" << array.Pull()<<"\n";
+        cout << "test02\n" << array2.Pull()<<"\n";
+        cout << "test03\n" << array3.Pull()<<"\n";
         test=2;
         array.Push(&test);
-        cout << "test\n" << array.Pull()<<"\n";
+        cout << "test04\n" << array.Pull()<<"\n";
 
 
         //float b=array.Pull(); // возврящает типа float
