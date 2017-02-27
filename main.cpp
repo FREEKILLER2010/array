@@ -12,7 +12,7 @@ public:
   int Length(){ // размер масива
     return count;
   }
-  //inprogress
+  //inprogress bu
 
   void Push(void *data){ // добавить элемент в массив
     element=(void**)realloc(element,(count+1)*sizeof(void*));
