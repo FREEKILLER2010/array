@@ -9,7 +9,7 @@ class Array {
 public:
   void **element;
 
-  int Length(){ // размера масива
+  int Length(){ // размер масива
     return count;
   }
 
@@ -22,6 +22,7 @@ public:
     cout << "here3\n";
     count++;
   }
+
 
 
   TYPE Pull(){
