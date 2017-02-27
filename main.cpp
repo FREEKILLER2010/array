@@ -21,13 +21,31 @@ public:
     memcpy(element[count],data,sizeof(TYPE));
     cout << "here3\n";
     count++;
+    cout << "count -> " << count << "\n";
+
+  }
+  void Push(void *data, int position){ // добавить элемент в массив
+    if (position>>count){ // остановился тут КИРИЛЛ
+      element=(void**)realloc(element,(position+1)*sizeof(void*));
+    }
+    cout << "here\n";
+    cout << "here2\n";
+    memcpy(element[position],data,sizeof(TYPE));
+    cout << "here3\n";
+    count+=position-count+1;
+    cout << "count -> " << count << "\n";
   }
 
 
 
   TYPE Pull(){
 
-    return *((TYPE*)element[count]);
+    return *((TYPE*)element[count-1]);
+
+  }
+  TYPE Pull(int position){
+
+    return *((TYPE*)element[position]);
 
   }
 
@@ -68,23 +86,25 @@ int main()
         array3.Create();
 
         array.Push(&test);
-        array2.Push(&test2);
+        array2.Push(&test2,0);
         array3.Push(&test3);
         test=2;
-        array.Push(&test);
+        array.Push(&test,5);
+        array.Push(&test,4);
 
 
 
         cout << "test01\n" << array.Pull()<<"\n";
-        cout << "test02\n" << array2.Pull()<<"\n";
+        cout << "test02\n" << array2.Pull(0)<<"\n";
         cout << "test03\n" << array3.Pull()<<"\n";
         test=2;
-        array.Push(&test);
-        cout << "test04\n" << array.Pull()<<"\n";
+        array.Push(&test,2);
+        cout << "test04\n" << array.Pull(4)<<"\n";
 
 
         //float b=array.Pull(); // возврящает типа float
         //st c=array.Pull(); // возврящает типа st
+
 
 
 
