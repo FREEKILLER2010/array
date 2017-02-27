@@ -13,6 +13,7 @@ public:
     return count;
   }
 
+
   void Push(void *data){ // добавить элемент в массив
     element=(void**)realloc(element,(count+1)*sizeof(void*));
     cout << "here\n";
