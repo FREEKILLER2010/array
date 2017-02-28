@@ -6,9 +6,14 @@ using namespace std;
 
 template< typename TYPE>
 class Array {
+
 public:
   void **element;
+  Array(){
+    element=(void**)malloc(sizeof(void*));
+    count=0;
 
+  }
   int Length(){ // размер масива
     return count;
   }
@@ -123,10 +128,10 @@ int main()
         int test=1;
         float test2 = 3.5;
         char test3 = 'h';
-        array.Create();
-        array2.Create();
+        //array.Create();
+        //array2.Create();
 
-        array3.Create();
+        //array3.Create();
 
         array.Push(&test);
         array2.Push(&test2,0);
@@ -144,7 +149,7 @@ int main()
         array.Push(&test,2);
         cout << "test04\n" << array3.Pull(3)<<"\n";
 
-        len.Create();
+      //  len.Create();
         char a='a';
         len.Push(&a);
         len.Push(&a);
