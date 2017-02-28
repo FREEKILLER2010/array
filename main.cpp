@@ -61,13 +61,6 @@ public:
   }
 
 
-  TYPE Create(){ // заполнить поля нучальными данными (по возможности исключить эту функцию)
-    element=(void**)malloc(sizeof(void*));
-    count=0;
-    return 0;
-  }
-
-
   TYPE Get(){ // получить данные последнего элемента (не вытягивая его)
     if ((element[count-1]) != 0){
       return *((TYPE*)element[count-1]);
@@ -128,10 +121,7 @@ int main()
         int test=1;
         float test2 = 3.5;
         char test3 = 'h';
-        //array.Create();
-        //array2.Create();
 
-        //array3.Create();
 
         array.Push(&test);
         array2.Push(&test2,0);
@@ -148,8 +138,8 @@ int main()
         test=2;
         array.Push(&test,2);
         cout << "test04\n" << array3.Pull(3)<<"\n";
+        cout << "test08\n" << array3.Pull(3)<<"\n";
 
-      //  len.Create();
         char a='a';
         len.Push(&a);
         len.Push(&a);
