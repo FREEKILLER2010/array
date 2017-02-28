@@ -52,7 +52,7 @@ public:
     }
     return 0;
   }
-
+//test
 
   TYPE Create(){ // заполнить поля нучальными данными (по возможности исключить эту функцию)
     element=(void**)malloc(sizeof(void*));
