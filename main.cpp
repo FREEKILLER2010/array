@@ -15,6 +15,7 @@ public:
   //inprogress bu
 
   void Push(void *data){ // добавить элемент в массив
+    cout << "count -> " << count << "\n";
     element=(void**)realloc(element,(count+1)*sizeof(void*));
     cout << "here\n";
     element[count]=(void*)malloc(sizeof(TYPE));
@@ -22,31 +23,35 @@ public:
     memcpy(element[count],data,sizeof(TYPE));
     cout << "here3\n";
     count++;
-    cout << "count -> " << count << "\n";
+    cout << "count1 -> " << count << "\n";
 
   }
   void Push(void *data, int position){ // добавить элемент в массив
-    if (position>>count){ // остановился тут КИРИЛЛ
+    if (position>count){
       element=(void**)realloc(element,(position+1)*sizeof(void*));
+      count+=position-count+1;
+
     }
-    cout << "here\n";
-    cout << "here2\n";
+    element[position]=(void*)malloc(sizeof(TYPE));
     memcpy(element[position],data,sizeof(TYPE));
-    cout << "here3\n";
-    count+=position-count+1;
-    cout << "count -> " << count << "\n";
+    cout << "count1 -> " << count << "\n";
   }
 
 
 
   TYPE Pull(){
 
-    return *((TYPE*)element[count-1]);
+    if ((element[count-1]) != 0){
+      return *((TYPE*)element[count-1]);
+    }
+    return 0;
 
   }
   TYPE Pull(int position){
-
-    return *((TYPE*)element[position]);
+    if ((element[position]) != 0){
+      return *((TYPE*)element[position]);
+    }
+    return 0;
 
   }
 
@@ -100,7 +105,7 @@ int main()
         cout << "test03\n" << array3.Pull()<<"\n";
         test=2;
         array.Push(&test,2);
-        cout << "test04\n" << array.Pull(4)<<"\n";
+        cout << "test04\n" << array3.Pull(3)<<"\n";
 
 
         //float b=array.Pull(); // возврящает типа float
