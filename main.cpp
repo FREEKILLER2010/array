@@ -111,7 +111,7 @@ public:
   };
 
 int main()
-{
+{/*
         Array<int> array;
         Array<float> array2;
         Array<char> array3;
@@ -153,7 +153,22 @@ int main()
 
 
 
+*/
+Array<int> array;
+int test=1;
+
+//array.Create();
+
+array.Push(&test);
+test =2;
+array.Push(&test);
 
 
+cout << "test01\n" << array.Pull(0)<<"\n";
+cout << "test02\n" << array.Pull(1)<<"\n";
+array.Swap(0,1);
+cout << "test03\n" << array.Pull(0)<<"\n";
+cout << "test04\n" << array.Pull(1)<<"\n";
+array.Reset();
         return 0;
 }
