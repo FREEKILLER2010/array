@@ -4,10 +4,18 @@
 #include <string.h>
 using namespace std;
 
+//FIXME: free не правильно работате
+
 template< typename TYPE>
 class Array {
 public:
   void **element;
+
+  Array(){
+   element=(void**)malloc(sizeof(void*));
+   count=0;
+
+ }
 
   int Length(){ // размер масива
     return count;
@@ -40,22 +48,24 @@ public:
   }
 
   TYPE Pull(int position){ //вытянуть nй элемент
-    TYPE tmp;
-    if (position < count){
-      if ((element[position]) != 0){
-        tmp = *((TYPE*)element[position]);
-        free (element[position]);
-        return tmp;
+      TYPE tmp;
+      if (position < count){
+        if ((element[position]) != 0){
+          tmp = *((TYPE*)element[position]);
+          free (element[position]);
+          return tmp;
+        }
       }
+      return 0;
     }
-    return 0;
-  }
 
-  TYPE Create(){ // заполнить поля нучальными данными (по возможности исключить эту функцию)
+/*
+  TYPE Create(){ // заполнить поля начльными данными (по возможности исключить эту функцию)
     element=(void**)malloc(sizeof(void*));
     count=0;
     return 0;
   }
+  */
 
   TYPE Get(){ // получить данные последнего элемента (не вытягивая его)
     if ((element[count-1]) != 0){
@@ -83,7 +93,9 @@ public:
 
   TYPE Reset(){ // очистить массив (возможно это дублирует Delete())
     for (int i=0;i<count;i++){
-      free(element[i]);
+      if (element[i]){
+        free(element[i]);
+      }
     }
     free(element);
     element=(void**)malloc(sizeof(void*));
@@ -114,7 +126,7 @@ int main()
         Array<int> array;
         int test=1;
 
-        array.Create();
+        //array.Create();
 
         array.Push(&test);
         test =2;
@@ -126,6 +138,7 @@ int main()
         array.Swap(0,1);
         cout << "test03\n" << array.Pull(0)<<"\n";
         cout << "test04\n" << array.Pull(1)<<"\n";
+        array.Reset();
 
         return 0;
 }
