@@ -41,6 +41,7 @@ public:
     return 0;
   }
 //dgsdgsgsd
+//changed something
 //sdgsddg
   TYPE Pull(int position){ //вытянуть nй элемент
     TYPE tmp;
