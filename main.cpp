@@ -29,9 +29,6 @@ public:
     memcpy(element[position],data,sizeof(TYPE));
   }
 
-  //chanfgessfsffsfsds
-
-
   TYPE Pull(){ // вытянуть последний элемент
     TYPE tmp;
     if ((element[count-1]) != 0){
@@ -53,15 +50,12 @@ public:
     }
     return 0;
   }
-//test
-//one more test comite to my branch
 
   TYPE Create(){ // заполнить поля нучальными данными (по возможности исключить эту функцию)
     element=(void**)malloc(sizeof(void*));
     count=0;
     return 0;
   }
-
 
   TYPE Get(){ // получить данные последнего элемента (не вытягивая его)
     if ((element[count-1]) != 0){
@@ -96,7 +90,15 @@ public:
     count=0;
     return 0;
   }
-  void Swap(){} // Поменять местми nй и kй элемент
+  TYPE Swap(int i, int j){ // Поменять местми nй и kй элемент
+    if ((element[i]) && (element[j])){
+      void *tmp=malloc(sizeof(TYPE));
+      memcpy(tmp,element[j],sizeof(TYPE));
+      memcpy(element[j],element[i],sizeof(TYPE));
+      memcpy(element[i],tmp,sizeof(TYPE));
+    }
+    return 0;
+  }
 
 
 
@@ -110,50 +112,20 @@ public:
 int main()
 {
         Array<int> array;
-        Array<float> array2;
-        Array<char> array3;
-        Array<char> len;
-
-
         int test=1;
-        float test2 = 3.5;
-        char test3 = 'h';
-        array.Create();
-        array2.Create();
 
-        array3.Create();
+        array.Create();
 
         array.Push(&test);
-        array2.Push(&test2,0);
-        array3.Push(&test3);
-        test=2;
-        array.Push(&test,5);
-        array.Push(&test,4);
+        test =2;
+        array.Push(&test);
 
 
-
-        cout << "test01\n" << array.Pull()<<"\n";
-        cout << "test02\n" << array2.Pull(0)<<"\n";
-        cout << "test03\n" << array3.Pull()<<"\n";
-        test=2;
-        array.Push(&test,2);
-        cout << "test04\n" << array3.Pull(3)<<"\n";
-
-        len.Create();
-        char a='a';
-        len.Push(&a);
-        len.Push(&a);
-        cout << "test05\n" << len.Length()<<"\n";
-        len.Delete();
-
-
-
-        //float b=array.Pull(); // возврящает типа float
-        //st c=array.Pull(); // возврящает типа st
-
-
-
-
+        cout << "test01\n" << array.Pull(0)<<"\n";
+        cout << "test02\n" << array.Pull(1)<<"\n";
+        array.Swap(0,1);
+        cout << "test03\n" << array.Pull(0)<<"\n";
+        cout << "test04\n" << array.Pull(1)<<"\n";
 
         return 0;
 }
