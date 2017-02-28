@@ -29,7 +29,8 @@ public:
     memcpy(element[position],data,sizeof(TYPE));
   }
 
-
+//sfsffdsgfdgdfsd
+//reee
 
   TYPE Pull(){ // вытянуть последний элемент
     TYPE tmp;
@@ -40,7 +41,7 @@ public:
     }
     return 0;
   }
-//commits for master branch 
+//commits for master branch
   TYPE Pull(int position){ //вытянуть nй элемент
     TYPE tmp;
     if (position < count){
