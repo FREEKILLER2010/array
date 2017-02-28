@@ -108,7 +108,7 @@ public:
     int getSize(){
       if (!sizeof(element)) return 0;
       else
-      return sizeof(element)/sizeof(TYPE);
+      return (sizeof(element)/sizeof(TYPE))+1;
     }
   };
 
