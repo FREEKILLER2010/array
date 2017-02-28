@@ -45,6 +45,7 @@ public:
       tmp = *((TYPE*)element[count-1]);
       //free (element[count-1]);
       delete[] (TYPE*)element[count-1];
+      count--;
       return tmp;
     }
     return 0;
@@ -72,7 +73,7 @@ public:
   }
 
   TYPE Get(int position){ // получить данные nго элемента (не вытягивая его)
-    TYPE tmp;
+    //TYPE tmp;
     if (position < count){
       if ((element[position]) != 0){
         return *((TYPE*)element[position]);
@@ -89,23 +90,32 @@ public:
   }
 
   TYPE Reset(){ // очистить массив (возможно это дублирует Delete())
-    int count = getSize()+1;
+
+        cout << "Count before deletting = " << count << "\n";
     for (int i=0;i<count;i++){
+      cout << "Deleting " << i+1 <<"-i element \n";
       free(element[i]);
     }
+    cout << "Done deleting array's cells\n";
     free(element);
+
+    // Delete не стоит использовать вместе с malloc
+    // Либо malloc/free
+    // Либо New/Delete
+    cout << "Done deleting array\n";
     element=(void**)malloc(sizeof(void*));
     count=0;
     return 0;
   }
-  TYPE Swap(int i, int j){ // Поменять местми nй и kй элемент
+
+  /*TYPE*/ void Swap(int i, int j){ // Поменять местми nй и kй элемент
     if ((element[i]) && (element[j])){
       void *tmp=malloc(sizeof(TYPE));
       memcpy(tmp,element[j],sizeof(TYPE));
       memcpy(element[j],element[i],sizeof(TYPE));
       memcpy(element[i],tmp,sizeof(TYPE));
     }
-    return 0;
+    //return 0;
   }
 
 
@@ -114,16 +124,12 @@ public:
   private:
     int count;
     int out_size;
-    int getSize(){
-      if (!sizeof(element)) return 0;
-      else
-      return (sizeof(element)/sizeof(TYPE))+1;
-    }
+
   };
 
 int main()
 {
-        Array<int> array;
+  /*      Array<int> array;
         Array<int> array2;
         Array<char> array3;
         Array<char> len;
@@ -165,23 +171,28 @@ int main()
         //st c=array.Pull(); // возврящает типа st
 
 
+*/
 
-/*
 Array<char> array;
 int test='1';
 
 //array.Create();
-
+cout << "Count before pushing = " << array.Length() << "\n";
 array.Push(test);
 test ='2';
 array.Push(test);
+array.Push('a');
 
-
-cout << "test01\n" << array.Pull(0)<<"\n";
-cout << "test02\n" << array.Pull(1)<<"\n";
-//array.Swap(0,1);
-cout << "test03\n" << array.Pull(0)<<"\n";
-cout << "test04\n" << array.Pull(1)<<"\n";
-array.Reset();*/
+cout << "Count before operations = " << array.Length() << "\n";
+//cout << "test01\n" << array.Pull(0)<<"\n";
+//cout << "test02\n" << array.Pull(1)<<"\n";
+array.Swap(0,1);
+cout << "test03 = " << array.Get(0)<<"\n";
+cout << "Count after pull 1 = " << array.Length() << "\n";
+cout << "test04 = " << array.Get(1)<<"\n";
+cout << "Count after pull 2 = " << array.Length() << "\n";
+cout << "test04 = " << array.Get(2)<<"\n";
+cout << "Before Resetting \n";
+array.Reset();
         return 0;
 }
