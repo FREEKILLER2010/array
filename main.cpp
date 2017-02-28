@@ -29,14 +29,9 @@ public:
     memcpy(element[position],data,sizeof(TYPE));
   }
 
-<<<<<<< HEAD
   //chanfgessfsffsfsds
 
 
-=======
-//sfsffdsgfdgdfsd
-//reee
->>>>>>> origin/master
 
   TYPE Pull(){ // вытянуть последний элемент
     TYPE tmp;
@@ -93,6 +88,7 @@ public:
   }
 
   TYPE Reset(){ // очистить массив (возможно это дублирует Delete())
+    int count = getSize()+1;
     for (int i=0;i<count;i++){
       free(element[i]);
     }
@@ -109,7 +105,9 @@ public:
   private:
     int count;
     int out_size;
-
+    int getSize(){
+      return sizeof(element)/sizeof(TYPE);
+    }
   };
 
 int main()
