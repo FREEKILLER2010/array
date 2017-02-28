@@ -29,9 +29,14 @@ public:
     memcpy(element[position],data,sizeof(TYPE));
   }
 
+<<<<<<< HEAD
   //chanfgessfsffsfsds
 
 
+=======
+//sfsffdsgfdgdfsd
+//reee
+>>>>>>> origin/master
 
   TYPE Pull(){ // вытянуть последний элемент
     TYPE tmp;
