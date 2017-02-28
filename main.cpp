@@ -40,7 +40,8 @@ public:
     }
     return 0;
   }
-
+//dgsdgsgsd
+//sdgsddg
   TYPE Pull(int position){ //вытянуть nй элемент
     TYPE tmp;
     if (position < count){
