@@ -29,6 +29,7 @@ public:
     memcpy(element[position],data,sizeof(TYPE));
   }
 
+  //chanfgessfsffsfsds
 
 
   TYPE Pull(){ // вытянуть последний элемент
