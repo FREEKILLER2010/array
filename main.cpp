@@ -26,12 +26,13 @@ public:
 
   }
   void Push(TYPE data, int position){ // добавить элемент в массив на nю позицию
-    if (position > count){
+    if (position >= count){
       element=(void**)realloc(element,(position+1)*sizeof(void*));
       count+=position-count+1;
     }
     element[position]=(void*)malloc(sizeof(TYPE));
     memcpy(element[position],&data,sizeof(TYPE));
+    //count++;
   }
 
 
@@ -42,7 +43,8 @@ public:
     TYPE tmp;
     if ((element[count-1]) != 0){
       tmp = *((TYPE*)element[count-1]);
-      free (element[count-1]);
+      //free (element[count-1]);
+      delete[] (TYPE*)element[count-1];
       return tmp;
     }
     return 0;
@@ -50,10 +52,11 @@ public:
 //commits for master branch
   TYPE Pull(int position){ //вытянуть nй элемент
     TYPE tmp;
-    if (position < count){
+    if (position <= count){
       if ((element[position]) != 0){
         tmp = *((TYPE*)element[position]);
-        free (element[position]);
+        //free (element[position]);
+        delete[] (TYPE*)element[position];
         return tmp;
       }
     }
@@ -121,17 +124,18 @@ public:
 int main()
 {
         Array<int> array;
-        Array<float> array2;
+        Array<int> array2;
         Array<char> array3;
         Array<char> len;
 
 
         int test=1;
-        float test2 = 3.5;
+        int test2 = 3;
         char test3 = 'h';
 
 
         array.Push(test);
+        cout << "array2.Count before push " << array2.Length() << "\n";
         array2.Push(test2,0);
         array3.Push(test3);
         test=2;
@@ -141,12 +145,13 @@ int main()
 
 
         cout << "test01\n" << array.Pull()<<"\n";
-        cout << "test02\n" << array2.Pull(0)<<"\n";
+        cout << "array2.Count before pull " << array2.Length() << "\n";
+        cout << "test02\n" << array2.Pull()<<"\n";
         cout << "test03\n" << array3.Pull()<<"\n";
         test=2;
         array.Push(test,2);
-        cout << "test04\n" << array3.Pull(3)<<"\n";
-        cout << "test08\n" << array3.Pull(3)<<"\n";
+        cout << "test04\n" << array2.Pull(3)<<"\n";
+        cout << "test08\n" << array2.Pull(3)<<"\n";
 
         char a='a';
         len.Push(a);
