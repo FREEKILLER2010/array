@@ -106,6 +106,8 @@ public:
     int count;
     int out_size;
     int getSize(){
+      if (!sizeof(element)) return 0;
+      else
       return sizeof(element)/sizeof(TYPE);
     }
   };
