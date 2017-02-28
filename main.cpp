@@ -40,7 +40,7 @@ public:
     }
     return 0;
   }
-
+//commits for master branch 
   TYPE Pull(int position){ //вытянуть nй элемент
     TYPE tmp;
     if (position < count){
