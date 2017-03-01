@@ -13,9 +13,9 @@ public:
     //element= (void**)malloc(size*sizeof(void*));
     element = new TYPE[size];
     for(int i=0;i<size;i++){
-      int tmp = 0;
+
     //  element[i]=(void*)malloc(sizeof(TYPE));
-    element[i]=0;
+    element[i]=(TYPE)0;
   //    memcpy(element[i],&tmp,sizeof(TYPE));
     }
     count=size;
@@ -33,19 +33,23 @@ public:
   }
 
   void Push(TYPE data){ // добавить элемент в конец массива
-    element=(void**)realloc(element,(count+1)*sizeof(void*));
-    element[count]=(void*)malloc(sizeof(TYPE));
-    memcpy(element[count],&data,sizeof(TYPE));
+    //element=(void**)realloc(element,(count+1)*sizeof(void*));
+    //element[count]=(void*)malloc(sizeof(TYPE));
+    //memcpy(element[count],&data,sizeof(TYPE));
     count++;
+    ResizeArray(count);
+    element[count]= data;
+
 
   }
   void Push(TYPE data, int position){ // добавить элемент в массив на nю позицию
     if (position >= count){
-      element=(void**)realloc(element,(position+1)*sizeof(void*));
+      //element=(void**)realloc(element,(position+1)*sizeof(void*));
       count+=position-count+1;
+      ResizeArray(count);
     }
-    element[position]=(void*)malloc(sizeof(TYPE));
-    memcpy(element[position],&data,sizeof(TYPE));
+    element[position]=data;
+  //  memcpy(element[position],&data,sizeof(TYPE));
     //count++;
   }
 
@@ -68,10 +72,10 @@ public:
   TYPE Pull(int position){ //вытянуть nй элемент
     TYPE tmp;
     if (position <= count){
-      if ((element[position]) != NULL){
-        tmp = *((TYPE*)element[position]);
+      if ((element[position]) != (TYPE)NULL){
+        tmp = element[position];
         //free (element[position]);
-        element[position]= NULL;
+        element[position]= (TYPE)NULL;
         return tmp;
       }
       else {
@@ -84,8 +88,8 @@ public:
 
 
   TYPE Get(){ // получить данные последнего элемента (не вытягивая его)
-    if ((element[count-1]) != 0){
-      return *((TYPE*)element[count-1]);
+    if ((element[count]) != (TYPE)0){
+      return element[count];
     }
     return 0;
   }
@@ -94,7 +98,7 @@ public:
     //TYPE tmp;
     if (position < count){
       if ((element[position]) != 0){
-        return *((TYPE*)element[position]);
+        return element[position];
       }
     }
     return 0;
@@ -107,16 +111,16 @@ public:
         cout << "Count before deletting = " << count << "\n";
     for (int i=0;i<count;i++){
       cout << "Deleting " << i+1 <<"-i element \n";
-      free(element[i]);
+      delete &element[i];
     }
     cout << "Done deleting array's cells\n";
-    free(element);
+    delete[] element;
 
     // Delete не стоит использовать вместе с malloc
     // Либо malloc/free
     // Либо New/Delete
     cout << "Done deleting array\n";
-    element=(void**)malloc(sizeof(void*));
+    element=new TYPE[1];
     count=0;
     return 0;
   }
@@ -136,9 +140,9 @@ public:
   cout << "[] overloaded func" << endl;
   //pushingposition = subscript;
   if(subscript>count){
-    Push(-1,subscript);
+    ResizeArray(subscript);
   }
-  return *((TYPE*)element[subscript]);
+  return element[subscript];
 
 }
 
@@ -147,15 +151,30 @@ public:
     int out_size;
   //  int pushingposition;
     //int error = -1;
+    int ResizeArray(int newsize){
+      TYPE* temparray = new TYPE[newsize];
+      int b;
+      if(newsize>count){
+        b=count;
+      }
+      else b= newsize;
+      for(int i =0;i<b;i++){
+        temparray[i]= element[i];
+      }
+      delete[] element;
+      element = temparray;
+      return 0;
+    }
 
   };
 template <typename TYPE>
  void Array<TYPE>::Swap(int i, int j){
     if ((element[i]) && (element[j])){
-      void *tmp=malloc(sizeof(TYPE));
-      memcpy(tmp,element[j],sizeof(TYPE));
-      memcpy(element[j],element[i],sizeof(TYPE));
-      memcpy(element[i],tmp,sizeof(TYPE));
+      TYPE* tmp=new TYPE[1];
+      tmp[1]= element[j];
+      element[j]=element[i];
+      element[i]=tmp[1];
+      delete[] tmp;
     }
   }
 template <typename TYPE>
