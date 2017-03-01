@@ -129,7 +129,6 @@ public:
   pushingposition = subscript;
   if(subscript>count){
     Push(-1,subscript);
-    return *((TYPE*)element[subscript]);
   }
   return *((TYPE*)element[subscript]);
 
@@ -139,7 +138,7 @@ public:
     int count;
     int out_size;
     int pushingposition= -1;
-    int error = -1;
+    //int error = -1;
 
   };
 template <typename TYPE>
