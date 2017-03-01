@@ -9,11 +9,17 @@ class Array {
 
 public:
   void **element;
-  Array(){
-    element=(void**)malloc(sizeof(void*));
-    count=0;
+  Array(int size){
+    element= (void**)malloc(size*sizeof(void*));
+    count=size;
 
   }
+  Array(){
+    element= (void**)malloc(sizeof(void*));
+    count=0;
+  }
+
+  void Swap(int i,int j);
   int Length(){ // размер масива
     return count;
   }
@@ -54,11 +60,15 @@ public:
   TYPE Pull(int position){ //вытянуть nй элемент
     TYPE tmp;
     if (position <= count){
-      if ((element[position]) != 0){
+      if ((element[position]) != NULL){
         tmp = *((TYPE*)element[position]);
         //free (element[position]);
-        delete[] (TYPE*)element[position];
+        element[position]= NULL;
         return tmp;
+      }
+      else {
+        cout << "Position is NULL" << endl;
+
       }
     }
     return 0;
@@ -82,12 +92,7 @@ public:
     return 0;
   }
 
-  void Delete(){ // удалить массив
-    for (int i=0;i<count;i++){
-      free(element[i]);
-    }
-    free(element);
-  }
+  void Delete();
 
   TYPE Reset(){ // очистить массив (возможно это дублирует Delete())
 
@@ -108,15 +113,15 @@ public:
     return 0;
   }
 
-  /*TYPE*/ void Swap(int i, int j){ // Поменять местми nй и kй элемент
-    if ((element[i]) && (element[j])){
+  /*TYPE void Swap(int i, int j){ // Поменять местми nй и kй элемент
+   if ((element[i]) && (element[j])){
       void *tmp=malloc(sizeof(TYPE));
       memcpy(tmp,element[j],sizeof(TYPE));
       memcpy(element[j],element[i],sizeof(TYPE));
       memcpy(element[i],tmp,sizeof(TYPE));
     }
     //return 0;
-  }
+  } */
 
 
 
@@ -126,7 +131,24 @@ public:
     int out_size;
 
   };
+template <typename TYPE>
+ void Array<TYPE>::Swap(int i, int j){
+    if ((element[i]) && (element[j])){
+      void *tmp=malloc(sizeof(TYPE));
+      memcpy(tmp,element[j],sizeof(TYPE));
+      memcpy(element[j],element[i],sizeof(TYPE));
+      memcpy(element[i],tmp,sizeof(TYPE));
+    }
+  }
+template <typename TYPE>
+void Array<TYPE>::Delete(){
+  // удалить массив
+    for (int i=0;i<count;i++){
+      free(element[i]);
+    }
+    free(element);
 
+}
 int main()
 {
   /*      Array<int> array;
@@ -173,15 +195,16 @@ int main()
 
 */
 
-Array<char> array;
-int test='1';
-
+Array<int> array;
+Array<int> array2(10);
+int test=0;
 //array.Create();
+cout << "Count after initialization array2 = " << array2.Length() << "\n";
 cout << "Count before pushing = " << array.Length() << "\n";
 array.Push(test);
-test ='2';
+test =0;
 array.Push(test);
-array.Push('a');
+array.Push(0);
 
 cout << "Count before operations = " << array.Length() << "\n";
 //cout << "test01\n" << array.Pull(0)<<"\n";
@@ -189,9 +212,9 @@ cout << "Count before operations = " << array.Length() << "\n";
 array.Swap(0,1);
 cout << "test03 = " << array.Get(0)<<"\n";
 cout << "Count after pull 1 = " << array.Length() << "\n";
-cout << "test04 = " << array.Get(1)<<"\n";
+cout << "test04 = " << array.Pull(1)<<"\n";
 cout << "Count after pull 2 = " << array.Length() << "\n";
-cout << "test04 = " << array.Get(2)<<"\n";
+cout << "test04 = " << array.Pull(1)<<"\n";
 cout << "Before Resetting \n";
 array.Reset();
         return 0;
