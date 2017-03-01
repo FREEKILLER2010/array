@@ -8,19 +8,22 @@ template< typename TYPE>
 class Array {
 
 public:
-  void **element;
-  Array(int size){
-    element= (void**)malloc(size*sizeof(void*));
+  TYPE *element;
+  Array<TYPE>(int size){
+    //element= (void**)malloc(size*sizeof(void*));
+    element = new TYPE[size];
     for(int i=0;i<size;i++){
       int tmp = 0;
-      element[i]=(void*)malloc(sizeof(TYPE));
-      memcpy(element[i],&tmp,sizeof(TYPE));
+    //  element[i]=(void*)malloc(sizeof(TYPE));
+    element[i]=0;
+  //    memcpy(element[i],&tmp,sizeof(TYPE));
     }
     count=size;
 
   }
   Array(){
-    element= (void**)malloc(sizeof(void*));
+  //  element= (void**)malloc(sizeof(void*));
+  element = new TYPE[0];
     count=0;
   }
 
@@ -131,7 +134,7 @@ public:
 
  TYPE &operator[](int subscript){
   cout << "[] overloaded func" << endl;
-  pushingposition = subscript;
+  //pushingposition = subscript;
   if(subscript>count){
     Push(-1,subscript);
   }
@@ -142,7 +145,7 @@ public:
   private:
     int count;
     int out_size;
-    int pushingposition= -1;
+  //  int pushingposition;
     //int error = -1;
 
   };
@@ -212,6 +215,7 @@ int main()
 
 Array<int> array;
 Array<float> array2(10);
+
 int test=0;
 //array.Create();
 cout << "Count after initialization array2 = " << array2.Length() << "\n";
