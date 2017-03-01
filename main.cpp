@@ -11,6 +11,11 @@ public:
   void **element;
   Array(int size){
     element= (void**)malloc(size*sizeof(void*));
+    for(int i=0;i<size;i++){
+      int tmp = 0;
+      element[i]=(void*)malloc(sizeof(TYPE));
+      memcpy(element[i],&tmp,sizeof(TYPE));
+    }
     count=size;
 
   }
@@ -206,7 +211,7 @@ int main()
 */
 
 Array<int> array;
-Array<int> array2(10);
+Array<float> array2(10);
 int test=0;
 //array.Create();
 cout << "Count after initialization array2 = " << array2.Length() << "\n";
@@ -222,6 +227,8 @@ cout << "Trying to get array[1] :   " << array[1] <<endl;
 cout << "Trying to get array[4] :   " << array[4] <<endl;
 cout << "Trying to get array[2] :   " << array[2] <<endl;
 cout << "Count before operations = " << array.Length() << "\n";
+cout << "Count array2 before operations = " << array2.Length() << "\n";
+cout << "Array2[3] = " << array2[3] <<endl;
 //cout << "test01\n" << array.Pull(0)<<"\n";
 //cout << "test02\n" << array.Pull(1)<<"\n";
 array.Swap(0,1);
