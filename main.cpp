@@ -13,7 +13,6 @@ public:
     //element= (void**)malloc(size*sizeof(void*));
     element = new TYPE[size];
     for(int i=0;i<size;i++){
-
     //  element[i]=(void*)malloc(sizeof(TYPE));
     element[i]=(TYPE)0;
   //    memcpy(element[i],&tmp,sizeof(TYPE));
@@ -36,21 +35,27 @@ public:
     //element=(void**)realloc(element,(count+1)*sizeof(void*));
     //element[count]=(void*)malloc(sizeof(TYPE));
     //memcpy(element[count],&data,sizeof(TYPE));
-    count++;
+  //  cout << "Trying to push" << endl;
+    //cout << "Data = "<< data << endl;
+
     ResizeArray(count);
     element[count]= data;
+    count++;
+  //  cout << "Data in element = "<< element[count] << endl;
+
 
 
   }
   void Push(TYPE data, int position){ // добавить элемент в массив на nю позицию
-    if (position >= count){
+    if (position > count){
       //element=(void**)realloc(element,(position+1)*sizeof(void*));
-      count+=position-count+1;
-      ResizeArray(count);
+    //  cout << "RESIZING" << endl;
+      ResizeArray(position);
+      count = position;
     }
     element[position]=data;
   //  memcpy(element[position],&data,sizeof(TYPE));
-    //count++;
+    count++;
   }
 
 
@@ -59,11 +64,25 @@ public:
 
   TYPE Pull(){ // вытянуть последний элемент
     TYPE tmp;
-    if ((element[count-1]) != 0){
-      tmp = *((TYPE*)element[count-1]);
+    if ((element[count]) != (TYPE)NULL){
+      tmp = element[count];
+      cout << "111"<<endl;
       //free (element[count-1]);
-      delete[] (TYPE*)element[count-1];
+      TYPE* temparray = new TYPE[count-1];
+      cout << "222"<<endl;
+      for(int i=0;i<count;i++){
+        cout << "111"<<i <<"!!!"<<endl;
+        temparray[i] = element[i];
+      }
+      cout << "333"<<endl;
+      delete[] element;
+      cout << "444"<<endl;
       count--;
+      cout << "555"<<endl;
+      element=temparray;
+      cout << "temparray= "<<*temparray<<endl;
+      //delete[] temparray;
+      cout << "777`"<<endl;
       return tmp;
     }
     return 0;
@@ -88,15 +107,15 @@ public:
 
 
   TYPE Get(){ // получить данные последнего элемента (не вытягивая его)
-    if ((element[count]) != (TYPE)0){
-      return element[count];
+    if ((element[count-1]) != (TYPE)0){
+      return element[count-1];
     }
-    return 0;
+    return -2;
   }
 
   TYPE Get(int position){ // получить данные nго элемента (не вытягивая его)
     //TYPE tmp;
-    if (position < count){
+    if (position <= count){
       if ((element[position]) != 0){
         return element[position];
       }
@@ -111,7 +130,14 @@ public:
         cout << "Count before deletting = " << count << "\n";
     for (int i=0;i<count;i++){
       cout << "Deleting " << i+1 <<"-i element \n";
-      delete &element[i];
+        try {
+          cout <<element[i]<< endl;
+          delete &element[i];
+        }
+      catch(int a){
+          cout <<"Error number: "<< a<< endl;
+
+        }
     }
     cout << "Done deleting array's cells\n";
     delete[] element;
@@ -137,10 +163,13 @@ public:
 
 
  TYPE &operator[](int subscript){
-  cout << "[] overloaded func" << endl;
-  //pushingposition = subscript;
+//  cout << "[] overloaded func" << endl;
+  pushingposition = subscript;
   if(subscript>count){
+    //cout <<"Resizing throwed from overloaded" << endl;
     ResizeArray(subscript);
+    count = subscript+1;
+    //cout<< "Count after resizing from overloaded = " << count << endl;
   }
   return element[subscript];
 
@@ -149,7 +178,7 @@ public:
   private:
     int count;
     int out_size;
-  //  int pushingposition;
+    int pushingposition;
     //int error = -1;
     int ResizeArray(int newsize){
       TYPE* temparray = new TYPE[newsize];
@@ -158,10 +187,12 @@ public:
         b=count;
       }
       else b= newsize;
+      //cout <<"Resizing array from " << count << " to " << newsize << endl;
       for(int i =0;i<b;i++){
         temparray[i]= element[i];
       }
       delete[] element;
+      //count=newsize;
       element = temparray;
       return 0;
     }
@@ -180,10 +211,10 @@ template <typename TYPE>
 template <typename TYPE>
 void Array<TYPE>::Delete(){
   // удалить массив
-    for (int i=0;i<count;i++){
-      free(element[i]);
-    }
-    free(element);
+  //  for (int i=0;i<count;i++){
+    //  delete element[i];
+    //}
+    delete[] element;
 
 }
 int main()
@@ -235,23 +266,39 @@ int main()
 Array<int> array;
 Array<float> array2(10);
 
-int test=0;
+int test=11;
 //array.Create();
-cout << "Count after initialization array2 = " << array2.Length() << "\n";
+//cout << "Count after initialization array2 = " << array2.Length() << "\n";
 cout << "Count before pushing = " << array.Length() << "\n";
 array.Push(test);
+cout <<"Done pushing 1 element\n";
+cout << "Count after pushing = " << array.Length() << "\n";
+cout << "Array[0] GET= "<<array.Get(0) << endl;
+cout << "Array[0]GET last= "<<array.Get() << endl;
 test =10;
 array.Push(test);
-array.Push(110);
+cout << "Array[0] GET= "<<array.Get(0) << endl;
+cout << "Array[1] GET= "<<array.Get(1) << endl;
+cout << "Array[1]GET last= "<<array.Get() << endl;
+cout <<"Done pushing 2 element\n";
+cout << "Count before pushing = " << array.Length() << "\n";
+array.Push(110,2);
+cout <<"Done pushing 3 element\n";
+cout << "Count before pushing = " << array.Length() << "\n";
 array[4] = 90;
+cout<< "Array[4] by get last = "<< array.Get() << endl;
+cout<< "Array[4] by get 4 = "<< array.Get(4) << endl;
+cout <<"Done pushing 4 element\n";
+cout << "Count before pushing = " << array.Length() << "\n";
 //array[3]= array[4];
 cout << "Trying to get array[0] :   " << array[0] <<endl;
 cout << "Trying to get array[1] :   " << array[1] <<endl;
+cout << "Trying to get array[3] :   " << array[3] <<endl;
 cout << "Trying to get array[4] :   " << array[4] <<endl;
 cout << "Trying to get array[2] :   " << array[2] <<endl;
 cout << "Count before operations = " << array.Length() << "\n";
-cout << "Count array2 before operations = " << array2.Length() << "\n";
-cout << "Array2[3] = " << array2[3] <<endl;
+//cout << "Count array2 before operations = " << array2.Length() << "\n";
+//cout << "Array2[3] = " << array2[3] <<endl;
 //cout << "test01\n" << array.Pull(0)<<"\n";
 //cout << "test02\n" << array.Pull(1)<<"\n";
 array.Swap(0,1);
@@ -259,8 +306,8 @@ cout << "test03 = " << array.Get(0)<<"\n";
 cout << "Count after pull 1 = " << array.Length() << "\n";
 cout << "test04 = " << array.Pull(1)<<"\n";
 cout << "Count after pull 2 = " << array.Length() << "\n";
-cout << "test04 = " << array.Pull(1)<<"\n";
+cout << "test04 pull last= " << array.Pull()<<"\n";
 cout << "Before Resetting \n";
-array.Reset();
+array.Delete();
         return 0;
 }
