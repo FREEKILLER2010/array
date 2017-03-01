@@ -124,11 +124,22 @@ public:
   } */
 
 
+ TYPE &operator[](int subscript){
+  cout << "[] overloaded func" << endl;
+  pushingposition = subscript;
+  if(subscript>count){
+    Push(-1,subscript);
+    return *((TYPE*)element[subscript]);
+  }
+  return *((TYPE*)element[subscript]);
 
+}
 
   private:
     int count;
     int out_size;
+    int pushingposition= -1;
+    int error = -1;
 
   };
 template <typename TYPE>
@@ -202,10 +213,15 @@ int test=0;
 cout << "Count after initialization array2 = " << array2.Length() << "\n";
 cout << "Count before pushing = " << array.Length() << "\n";
 array.Push(test);
-test =0;
+test =10;
 array.Push(test);
-array.Push(0);
-
+array.Push(110);
+array[4] = 90;
+//array[3]= array[4];
+cout << "Trying to get array[0] :   " << array[0] <<endl;
+cout << "Trying to get array[1] :   " << array[1] <<endl;
+cout << "Trying to get array[4] :   " << array[4] <<endl;
+cout << "Trying to get array[2] :   " << array[2] <<endl;
 cout << "Count before operations = " << array.Length() << "\n";
 //cout << "test01\n" << array.Pull(0)<<"\n";
 //cout << "test02\n" << array.Pull(1)<<"\n";
