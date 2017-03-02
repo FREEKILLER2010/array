@@ -38,10 +38,14 @@ public:
     //memcpy(element[count],&data,sizeof(TYPE));
   //  cout << "Trying to push" << endl;
     //cout << "Data = "<< data << endl;
-
+    if(count==1){
+      element[0] = data;
+    }
+    else{
     ResizeArray(count);
     element[count]= data;
     count++;
+  }
   //  cout << "Data in element = "<< element[count] << endl;
 
 
@@ -65,13 +69,14 @@ public:
 
   TYPE Pull(){ // вытянуть последний элемент
     TYPE tmp;
-    if ((element[count]) != (TYPE)NULL){
-      tmp = element[count];
+    if ((element[count-1]) != (TYPE)NULL){
+      if(!(count-1)){
+      tmp = element[count-1];
       cout << "111"<<endl;
       //free (element[count-1]);
       TYPE* temparray = new TYPE[count-1];
       cout << "222"<<endl;
-      for(int i=0;i<count;i++){
+      for(int i=0;i<count-2;i++){
         cout << "111"<<i <<"!!!"<<endl;
         temparray[i] = element[i];
       }
@@ -82,10 +87,12 @@ public:
       cout << "555"<<endl;
       element=temparray;
       cout << "temparray= "<<*temparray<<endl;
-      //delete[] temparray;
+      delete[] temparray;
       cout << "777`"<<endl;
       return tmp;
     }
+    }
+      cout << "Did not PULL" << endl;
     return 0;
   }
 //commits for master branch
@@ -103,6 +110,8 @@ public:
 
       }
     }
+    cout << "Did not PULL" << endl;
+
     return 0;
   }
 
@@ -190,12 +199,13 @@ public:
       }
       else b= newsize;
       //cout <<"Resizing array from " << count << " to " << newsize << endl;
-      for(int i =0;i<b;i++){
+      for(int i =0;i<=b;i++){
         temparray[i]= element[i];
       }
-      for(int i =count;i<newsize;i++){
+        if(newsize>=count){
+      for(int i =count;i<=newsize;i++){
         temparray[i]=(TYPE)0;   // set all new cells to NULL
-      }
+      }}
       delete[] element;
       //count=newsize;
       element = temparray;
@@ -281,7 +291,7 @@ cout << "Count after pushing = " << array.Length() << "\n";
 cout << "Array[0] GET= "<<array.Get(0) << endl;
 cout << "Array[0]GET last= "<<array.Get() << endl;
 test =10;
-//array.Push(test);
+array.Push(test);
 cout << "Array[0] GET= "<<array.Get(0) << endl;
 cout << "Array[1] GET= "<<array.Get(1) << endl;
 cout << "Array[1]GET last= "<<array.Get() << endl;
@@ -291,13 +301,13 @@ cout << "Count before pushing = " << array.Length() << "\n";
 cout <<"Done pushing 3 element\n";
 cout << "Count before pushing = " << array.Length() << "\n";
 //array[4] = 90;
-cout<< "Array[4] by get last = "<< array.Get() << endl;
-cout<< "Array[4] by get 4 = "<< array.Get(4) << endl;
+//cout<< "Array[4] by get last = "<< array.Get() << endl;
+//cout<< "Array[4] by get 4 = "<< array.Get(4) << endl;
 cout <<"Done pushing 4 element\n";
 cout << "Count before pushing = " << array.Length() << "\n";
 //array[3]= array[4];
 cout << "Trying to get array[0] :   " << array[0] <<endl;
-cout << "Trying to get array[1] :   " << array[1] <<endl;
+//cout << "Trying to get array[1] :   " << array[1] <<endl;
 //cout << "Trying to get array[3] :   " << array[3] <<endl;
 //cout << "Trying to get array[4] :   " << array[4] <<endl;
 //cout << "Trying to get array[2] :   " << array[2] <<endl;
@@ -309,9 +319,10 @@ cout << "Count before operations = " << array.Length() << "\n";
 //array.Swap(0,1);
 cout << "test03 = " << array.Get(0)<<"\n";
 cout << "Count after pull 1 = " << array.Length() << "\n";
-cout << "test04 = " << array.Pull(1)<<"\n";
+//cout << "test04 = " << array.Pull(1)<<"\n";
 cout << "Count after pull 2 = " << array.Length() << "\n";
 cout << "test04 pull last= " << array.Pull()<<"\n";
+cout << "Count after pull 1 = " << array.Length() << "\n";
 cout << "Before Resetting \n";
 array.Delete();
         return 0;
