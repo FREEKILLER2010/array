@@ -23,7 +23,8 @@ public:
   Array(){
   //  element= (void**)malloc(sizeof(void*));
   element = new TYPE[0];
-    count=0;
+  element[0]=(TYPE)NULL;
+    count=1;
   }
 
   void Swap(int i,int j);
@@ -49,7 +50,7 @@ public:
   void Push(TYPE data, int position){ // добавить элемент в массив на nю позицию
     if (position > count){
       //element=(void**)realloc(element,(position+1)*sizeof(void*));
-    //  cout << "RESIZING" << endl;
+
       ResizeArray(position);
       count = position;
     }
@@ -107,19 +108,20 @@ public:
 
 
   TYPE Get(){ // получить данные последнего элемента (не вытягивая его)
-    if ((element[count-1]) != (TYPE)0){
+  //  if ((element[count-1]) != (TYPE)0){
       return element[count-1];
-    }
-    return -2;
+    //}
+    //return -2;
   }
 
   TYPE Get(int position){ // получить данные nго элемента (не вытягивая его)
     //TYPE tmp;
-    if (position <= count){
-      if ((element[position]) != 0){
+    if (position <= (count-1)){
+
         return element[position];
-      }
+
     }
+  cout << "No such element" << endl;
     return 0;
   }
 
@@ -164,9 +166,9 @@ public:
 
  TYPE &operator[](int subscript){
 //  cout << "[] overloaded func" << endl;
-  pushingposition = subscript;
-  if(subscript>count){
-    //cout <<"Resizing throwed from overloaded" << endl;
+  //pushingposition = subscript;
+  if(subscript>(count-1)){
+    cout <<"Resizing throwed from overloaded" << endl;
     ResizeArray(subscript);
     count = subscript+1;
     //cout<< "Count after resizing from overloaded = " << count << endl;
@@ -178,7 +180,7 @@ public:
   private:
     int count;
     int out_size;
-    int pushingposition;
+  //  int pushingposition;
     //int error = -1;
     int ResizeArray(int newsize){
       TYPE* temparray = new TYPE[newsize];
@@ -190,6 +192,9 @@ public:
       //cout <<"Resizing array from " << count << " to " << newsize << endl;
       for(int i =0;i<b;i++){
         temparray[i]= element[i];
+      }
+      for(int i =count;i<newsize;i++){
+        temparray[i]=(TYPE)0;   // set all new cells to NULL
       }
       delete[] element;
       //count=newsize;
@@ -270,22 +275,22 @@ int test=11;
 //array.Create();
 //cout << "Count after initialization array2 = " << array2.Length() << "\n";
 cout << "Count before pushing = " << array.Length() << "\n";
-array.Push(test);
+//array.Push(test);
 cout <<"Done pushing 1 element\n";
 cout << "Count after pushing = " << array.Length() << "\n";
 cout << "Array[0] GET= "<<array.Get(0) << endl;
 cout << "Array[0]GET last= "<<array.Get() << endl;
 test =10;
-array.Push(test);
+//array.Push(test);
 cout << "Array[0] GET= "<<array.Get(0) << endl;
 cout << "Array[1] GET= "<<array.Get(1) << endl;
 cout << "Array[1]GET last= "<<array.Get() << endl;
 cout <<"Done pushing 2 element\n";
 cout << "Count before pushing = " << array.Length() << "\n";
-array.Push(110,2);
+//array.Push(110,2);
 cout <<"Done pushing 3 element\n";
 cout << "Count before pushing = " << array.Length() << "\n";
-array[4] = 90;
+//array[4] = 90;
 cout<< "Array[4] by get last = "<< array.Get() << endl;
 cout<< "Array[4] by get 4 = "<< array.Get(4) << endl;
 cout <<"Done pushing 4 element\n";
@@ -293,15 +298,15 @@ cout << "Count before pushing = " << array.Length() << "\n";
 //array[3]= array[4];
 cout << "Trying to get array[0] :   " << array[0] <<endl;
 cout << "Trying to get array[1] :   " << array[1] <<endl;
-cout << "Trying to get array[3] :   " << array[3] <<endl;
-cout << "Trying to get array[4] :   " << array[4] <<endl;
-cout << "Trying to get array[2] :   " << array[2] <<endl;
+//cout << "Trying to get array[3] :   " << array[3] <<endl;
+//cout << "Trying to get array[4] :   " << array[4] <<endl;
+//cout << "Trying to get array[2] :   " << array[2] <<endl;
 cout << "Count before operations = " << array.Length() << "\n";
 //cout << "Count array2 before operations = " << array2.Length() << "\n";
 //cout << "Array2[3] = " << array2[3] <<endl;
 //cout << "test01\n" << array.Pull(0)<<"\n";
 //cout << "test02\n" << array.Pull(1)<<"\n";
-array.Swap(0,1);
+//array.Swap(0,1);
 cout << "test03 = " << array.Get(0)<<"\n";
 cout << "Count after pull 1 = " << array.Length() << "\n";
 cout << "test04 = " << array.Pull(1)<<"\n";
